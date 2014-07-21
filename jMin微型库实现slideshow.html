@@ -46,45 +46,45 @@ a:hover { color: #bf1a21; text-decoration: none; }
 </head>
 <body>
     <div class="w990">
-    	<div class="slider">
-    		<div class="left" id='left'><</div>
-    		<div class="right" id="right">></div>
-    		<div class="slider-inner">
-    			<ul class="clearfloat" id="slideshow">
-		    		<li>1</li>
-		    		<li>2</li>
-		    		<li>3</li>
-		    		<li>4</li>
-		    		<li>5</li>
-		    		<li>6</li>
-		    		<li>7</li>
-		    		<li>8</li>
-		    		<li>9</li>
-		    		<li>10</li>
-		    	</ul>
-    		</div>
-    	</div>
-    	<div class="slider">
-    		<div class="left" id='left1'><</div>
-    		<div class="right" id="right1">></div>
-    		<div class="slider-inner">
-    			<ul class="clearfloat" id="slideshow1">
-		    		<li>1</li>
-		    		<li>2</li>
-		    		<li>3</li>
-		    		<li>4</li>
-		    		<li>5</li>
-		    		<li>6</li>
-		    		<li>7</li>
-		    		<li>8</li>
-		    		<li>9</li>
-		    		<li>10</li>
+        <div class="slider">
+            <div class="left" id='left'><</div>
+            <div class="right" id="right">></div>
+            <div class="slider-inner">
+                <ul class="clearfloat" id="slideshow">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                </ul>
+            </div>
+        </div>
+        <div class="slider">
+            <div class="left" id='left1'><</div>
+            <div class="right" id="right1">></div>
+            <div class="slider-inner">
+                <ul class="clearfloat" id="slideshow1">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
                                                     <li>8</li>
                                                     <li>9</li>
                                                     <li>10</li>
-		    	</ul>
-    		</div>
-    	</div>
+                </ul>
+            </div>
+        </div>
     </div>
     <script type="text/javascript">
     (function(document) {
@@ -140,7 +140,9 @@ a:hover { color: #bf1a21; text-decoration: none; }
                     }
                     nextTick(anim);
                 } else {
-                    elem.style[prop] = currStyle[prop] + diff[prop] + 'px';
+                    for (prop in propObj) {
+                        elem.style[prop] = currStyle[prop] + diff[prop] + 'px';
+                    }
                     callback && callback.call(elem);
                 }
             }
@@ -344,160 +346,160 @@ a:hover { color: #bf1a21; text-decoration: none; }
             });
     };
 
-    	/*window.onload = function() {
-    		function Slideshow(settings) {
-    			var prop;
-    			for (prop in settings) {
-    				settings.hasOwnProperty(prop) && (this[prop] = settings[prop]);
-    			}
-    		}
-    		Slideshow.prototype = {
-    			init: function() {
-    				var self = this,
-    					elem = this.elem,
-    					size = this.getSize(),
-    					first = self.first(),
-    					distance = parseFloat(self.getStyle(first, 'width'), 10) + parseFloat(self.getStyle(first, 'marginRight'), 10),
-    					animated = true,
-    					handler = {
-    						right: function() {
-    							if (!animated) {
-    								return;
-    							}
-    							animated = false;
-    							var last = self.last();
-    							last.style.marginLeft = -distance + 'px';
-    							elem.insertBefore(last, elem.firstChild);
-    							self.animate(last, {
-    								marginLeft: 0
-    							}, 400, function() {
-    								animated = true;
-    							});
-    						},
-    						left: function() {
-    							if (!animated) {
-    								return;
-    							}
-    							animated = false;
-    							var first = self.first();
-    							self.animate(first, {
-    								marginLeft: -distance
-    							}, 400, function() {
-    								elem.appendChild(first);
-    								first.style.marginLeft = '0px';
-    								animated = true;
-    							});
-    						},
-    						loop: function() {
-    							handler.timer = setInterval(handler.left, 2000);
-    						},
-    						clear: function() {
-    							clearInterval(handler.timer);
-    						}
-    					};
-    				elem.style.width = distance * size + 'px';
-    				this.addEvent(this.left, 'click', handler.left);
-    				this.addEvent(this.right, 'click', handler.right);
-    				this.addEvent(this.left, 'mouseout', handler.loop);
-    				this.addEvent(this.right, 'mouseout', handler.loop);
-    				this.addEvent(this.left, 'mouseover', handler.clear);
-    				this.addEvent(this.right, 'mouseover', handler.clear);
-    				handler.loop();
-    			},
-    			first: function() {
-    				var first = this.elem.firstChild;
-    				while (first.nodeName.indexOf('text') !== -1) {
-    					first = first.nextSibling;
-    				}
-    				return first;
-    			},
-    			last: function() {
-    				var last = this.elem.lastChild;
-    				while (last.nodeName.indexOf('text') !== -1) {
-    					last = last.previousSibling;
-    				}
-    				return last;
-    			},
-    			getSize: function() {
-    				var i = 1,
-    					first = this.first(),
-    					child = this.last();
-    				while (child !== first) {
-    					child = child.previousSibling;
-    					if (child.nodeName.indexOf('text') === -1) {
-    						i += 1;
-    					}
-    				}
-    				return i;
-    			},
-    			getStyle: window.getComputedStyle ? function(elem, prop) {
-    				return window.getComputedStyle(elem, null)[prop];
-    			} : function(elem, prop) {
-    				return elem.currentStyle[prop];
-    			},
-    			animate: function(elem, propObj, speed, callback) {
-    				var curStyle = {},
-    					diff = {},
-    					prop,
-    					pF = parseFloat;
-    				for (prop in propObj) {
-    					curStyle[prop] = pF(this.getStyle(elem, prop), 10);
-    					diff[prop] = propObj[prop] - curStyle[prop];
-    				}
+        /*window.onload = function() {
+            function Slideshow(settings) {
+                var prop;
+                for (prop in settings) {
+                    settings.hasOwnProperty(prop) && (this[prop] = settings[prop]);
+                }
+            }
+            Slideshow.prototype = {
+                init: function() {
+                    var self = this,
+                        elem = this.elem,
+                        size = this.getSize(),
+                        first = self.first(),
+                        distance = parseFloat(self.getStyle(first, 'width'), 10) + parseFloat(self.getStyle(first, 'marginRight'), 10),
+                        animated = true,
+                        handler = {
+                            right: function() {
+                                if (!animated) {
+                                    return;
+                                }
+                                animated = false;
+                                var last = self.last();
+                                last.style.marginLeft = -distance + 'px';
+                                elem.insertBefore(last, elem.firstChild);
+                                self.animate(last, {
+                                    marginLeft: 0
+                                }, 400, function() {
+                                    animated = true;
+                                });
+                            },
+                            left: function() {
+                                if (!animated) {
+                                    return;
+                                }
+                                animated = false;
+                                var first = self.first();
+                                self.animate(first, {
+                                    marginLeft: -distance
+                                }, 400, function() {
+                                    elem.appendChild(first);
+                                    first.style.marginLeft = '0px';
+                                    animated = true;
+                                });
+                            },
+                            loop: function() {
+                                handler.timer = setInterval(handler.left, 2000);
+                            },
+                            clear: function() {
+                                clearInterval(handler.timer);
+                            }
+                        };
+                    elem.style.width = distance * size + 'px';
+                    this.addEvent(this.left, 'click', handler.left);
+                    this.addEvent(this.right, 'click', handler.right);
+                    this.addEvent(this.left, 'mouseout', handler.loop);
+                    this.addEvent(this.right, 'mouseout', handler.loop);
+                    this.addEvent(this.left, 'mouseover', handler.clear);
+                    this.addEvent(this.right, 'mouseover', handler.clear);
+                    handler.loop();
+                },
+                first: function() {
+                    var first = this.elem.firstChild;
+                    while (first.nodeName.indexOf('text') !== -1) {
+                        first = first.nextSibling;
+                    }
+                    return first;
+                },
+                last: function() {
+                    var last = this.elem.lastChild;
+                    while (last.nodeName.indexOf('text') !== -1) {
+                        last = last.previousSibling;
+                    }
+                    return last;
+                },
+                getSize: function() {
+                    var i = 1,
+                        first = this.first(),
+                        child = this.last();
+                    while (child !== first) {
+                        child = child.previousSibling;
+                        if (child.nodeName.indexOf('text') === -1) {
+                            i += 1;
+                        }
+                    }
+                    return i;
+                },
+                getStyle: window.getComputedStyle ? function(elem, prop) {
+                    return window.getComputedStyle(elem, null)[prop];
+                } : function(elem, prop) {
+                    return elem.currentStyle[prop];
+                },
+                animate: function(elem, propObj, speed, callback) {
+                    var curStyle = {},
+                        diff = {},
+                        prop,
+                        pF = parseFloat;
+                    for (prop in propObj) {
+                        curStyle[prop] = pF(this.getStyle(elem, prop), 10);
+                        diff[prop] = propObj[prop] - curStyle[prop];
+                    }
 
-    				var start = +new Date(),
-    					nextTick = window.requestAnimationFrame || function(callback) {
-    						setTimeout(callback, 13);
-    					};
+                    var start = +new Date(),
+                        nextTick = window.requestAnimationFrame || function(callback) {
+                            setTimeout(callback, 13);
+                        };
 
-    				function anim() {
-    					var ratio = (+new Date() - start) / speed,
-    						prop;
+                    function anim() {
+                        var ratio = (+new Date() - start) / speed,
+                            prop;
 
-    					if (ratio < 1) {
-    						for (prop in curStyle) {
-    							elem.style[prop] = curStyle[prop] + ratio * diff[prop] + 'px';
-    						}
-    						nextTick(anim);
-    					} else {
-    						for (prop in curStyle) {
-    							elem.style[prop] = curStyle[prop] + diff[prop] + 'px';
-    						}
-    						callback && callback.call(elem);
-    					}
-    				}
-    				anim();
-    				return this;
-    			},
-    			addEvent: document.addEventListener ? function(elem, type, handler) {
-    				elem.addEventListener(type, handler, false);
-    				return this;
-    			} : function(elem, type, handler) {
-    				elem.attachEvent('on' + type, handler);
-    				return this;
-    			}
-    		};
-    		var doc = document,
-    			left = doc.getElementById('left'),
-    			right = doc.getElementById('right'),
-    			slideshow = doc.getElementById('slideshow'),
-    			left1 = doc.getElementById('left1'),
-    			right1 = doc.getElementById('right1'),
-    			slideshow1 = doc.getElementById('slideshow1');
+                        if (ratio < 1) {
+                            for (prop in curStyle) {
+                                elem.style[prop] = curStyle[prop] + ratio * diff[prop] + 'px';
+                            }
+                            nextTick(anim);
+                        } else {
+                            for (prop in curStyle) {
+                                elem.style[prop] = curStyle[prop] + diff[prop] + 'px';
+                            }
+                            callback && callback.call(elem);
+                        }
+                    }
+                    anim();
+                    return this;
+                },
+                addEvent: document.addEventListener ? function(elem, type, handler) {
+                    elem.addEventListener(type, handler, false);
+                    return this;
+                } : function(elem, type, handler) {
+                    elem.attachEvent('on' + type, handler);
+                    return this;
+                }
+            };
+            var doc = document,
+                left = doc.getElementById('left'),
+                right = doc.getElementById('right'),
+                slideshow = doc.getElementById('slideshow'),
+                left1 = doc.getElementById('left1'),
+                right1 = doc.getElementById('right1'),
+                slideshow1 = doc.getElementById('slideshow1');
 
-    		var slider = new Slideshow({
-    			elem: slideshow,
-    			left: left,
-    			right: right
-    		});
-    		var slider1 = new Slideshow({
-    			elem: slideshow1,
-    			left: left1,
-    			right: right1
-    		});
-    		slider.init();
-    		slider1.init();
-    	};*/
+            var slider = new Slideshow({
+                elem: slideshow,
+                left: left,
+                right: right
+            });
+            var slider1 = new Slideshow({
+                elem: slideshow1,
+                left: left1,
+                right: right1
+            });
+            slider.init();
+            slider1.init();
+        };*/
     </script>
 </body>
 </html>
